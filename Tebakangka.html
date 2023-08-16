@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tebak Angka</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tebak Angka</h1>
+  <p>Masukkan angka antara 1 dan 100:</p>
+  <input type="number" id="guessInput">
+  <button id="guessButton">Tebak</button>
+  <button id="resetButton" style="display: none;">Ulang</button>
+  <p id="message"></p>
+  
+  <script>
+    let secretNumber = Math.floor(Math.random() * 100) + 1;
+    const guessButton = document.getElementById("guessButton");
+    const resetButton = document.getElementById("resetButton");
+    const guessInput = document.getElementById("guessInput");
+    const message = document.getElementById("message");
+    
+    guessButton.addEventListener("click", function () {
+      const userGuess = parseInt(guessInput.value);
+      
+      if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+        message.textContent = "Masukkan angka antara 1 dan 100.";
+      } else if (userGuess === secretNumber) {
+        message.textContent = "Selamat! Anda menebak angka dengan benar.";
+        guessButton.disabled = true;
+        resetButton.style.display = "block";
+      } else if (userGuess < secretNumber) {
+        message.textContent = "Tebakan terlalu rendah. Coba lagi.";
+      } else {
+        message.textContent = "Tebakan terlalu tinggi. Coba lagi.";
+      }
+      
+      guessInput.value = "";
+    });
+    
+    resetButton.addEventListener("click", function () {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      message.textContent = "";
+      guessButton.disabled = false;
+      resetButton.style.display = "none";
+      guessInput.value = "";
+    });
+  </script>
+</body>
+</html>
